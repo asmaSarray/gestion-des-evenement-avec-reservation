@@ -8,22 +8,29 @@
   font-family: "Poppins", sans-serif;
 }
 
-.boody {
-  height: 100vh;
+body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  min-height: 100vh; /* Assure que l'élément occupe toute la hauteur de la vue */
+  margin: 0;
+  background-color: #f0f0f0; /* Exemple de couleur de fond */
 }
 
 .container {
-  max-width: 700px;
+  max-width: 950px;
   width: 100%;
   background-color: #fff;
-  padding: 25px 30px;
+  padding: 25px 50px;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+
+  /* Ajoutez ces lignes pour centrer le conteneur */
+  margin: 0 auto; /* Centre horizontalement */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .container .title {
@@ -148,7 +155,7 @@ form .button input:hover {
 
   form .user-details .input-box {
     margin-bottom: 15px;
-    width: 100%;
+    width: 90%;
   }
 
   form .category {

@@ -6,16 +6,16 @@ import { EvenementComponent } from './evenement/evenement.component';
 import { PageAccueilComponent } from './page-accueil/page-accueil.component';
 
 export const routes: Routes = [
-
-
   { path: '', component: PageAccueilComponent },
+  // {
+  //   path: '',
+  //   loadChildren: () =>
+  //     import('./page-accueil/page-accueil.component').then(
+  //       (m) => m.PageAccueilComponent
+  //     ),
+  // },
   { path: 'ficheevenement', component: EvenementComponent },
   { path: 'listeevenement', component: ListeEvenementComponent },
   { path: 'detailevenement', component: DetailEvenementComponent },
   { path: 'fichereservation', component: FicheReservationComponent },
-
-
-
-
-
 ];
