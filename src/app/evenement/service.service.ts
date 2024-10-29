@@ -12,7 +12,7 @@ import {
   providedIn: 'root',
 })
 export class ServiceService {
-  REST_API = environment.baseUrl + '/';
+  REST_API = environment.baseUrl + '/events';
   constructor(private httpClient: HttpClient) {}
   // Add
   AddNew(data: Evenement): Observable<any> {
@@ -25,13 +25,13 @@ export class ServiceService {
   // Get all objects
   GetAll(): Observable<any> {
     // let data = { code_societe: this.tokenService.getCodeSociete() }
-    return this.httpClient.get(`${this.REST_API}/evenements`);
+    return this.httpClient.get(`${this.REST_API}/events`);
     // .pipe(catchError(this.tokenService.handleErrorWithParams()));
   }
 
   // Get single object
   GetOne(id: any): Observable<any> {
-    let API_URL = `${this.REST_API}/'evenement'${id}`;
+    let API_URL = `${this.REST_API}/'event'${id}`;
     return this.httpClient.get(API_URL).pipe(
       map((res: any) => {
         return res || {};
@@ -42,13 +42,13 @@ export class ServiceService {
 
   // Update
   update(data: ServiceService): Observable<any> {
-    let API_URL = `${this.REST_API}/'evenement'`;
+    let API_URL = `${this.REST_API}/'event'`;
     return this.httpClient.put(API_URL, data);
   }
 
   // Delete
   delete(id: any): Observable<any> {
-    let API_URL = `${this.REST_API}/evenement`;
+    let API_URL = `${this.REST_API}/event`;
     let data: any = {};
     // data.code_societe = this.tokenService.getCodeSociete()
     data._id = id;

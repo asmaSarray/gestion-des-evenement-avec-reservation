@@ -1,8 +1,8 @@
-<form (ngSubmit)="save()" [formGroup]="form">
+<div>
   <div class="flex items-center" mat-dialog-title>
-    <!-- <h2 *ngIf="defaults?.titre" class="headline m-0 flex-auto">
+    <h2 *ngIf="defaults?.titre" class="headline m-0 flex-auto">
       Modifier événement
-    </h2> -->
+    </h2>
     <h2 *ngIf="!defaults?.titre" class="headline m-0 flex-auto">
       Ajouter événement
     </h2>
@@ -11,9 +11,7 @@
       mat-dialog-close
       mat-icon-button
       type="button"
-    >
-      <!-- <mat-icon svgIcon="mat:close"></mat-icon> -->
-    </button>
+    ></button>
   </div>
 
   <div class="container">
@@ -21,7 +19,7 @@
     <div class="title">créer événement</div>
     <div class="content">
       <!-- Registration form -->
-      <form action="#">
+      <form action="#" (ngSubmit)="save()" [formGroup]="form">
         <div class="user-details">
           <!-- Input for Full Name -->
           <div class="input-box">
@@ -94,11 +92,11 @@
             />
             <!-- <input type="submit" value="Upload" /> -->
             <!-- <input
-              type="file"
-              accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .svg"
-              placeholder="image"
-              required
-            /> -->
+                type="file"
+                accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .svg"
+                placeholder="image"
+                required
+              /> -->
           </div>
           <!-- Input for Confirm Password -->
           <div class="input-box">
@@ -114,12 +112,7 @@
 
         <div class="gender-details">
           <!-- Radio buttons for gender selection -->
-          <input
-            type="radio"
-            formControlName="visibility"
-            name="Visibilité publique ou privée"
-            id="dot-1"
-          />
+          <input type="radio" formControlName="visibility" id="dot-1" />
 
           <span class="gender-title">Visibilité publique ou privée</span>
           <div class="category">
@@ -136,8 +129,11 @@
         <!-- Submit button -->
         <div class="button">
           <input type="submit" value="Créer l'événement" />
+          <!-- <div class="button">
+              <input *ngIf="isUpdateMode()" type="submit" value="valider" />
+            </div> -->
         </div>
       </form>
     </div>
   </div>
-</form>
+</div>
