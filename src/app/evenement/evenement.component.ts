@@ -12,6 +12,7 @@ import { ServiceService } from './service.service';
 import { NgIf } from '@angular/common';
 import { setObjets1ToObjets2 } from '../global-functions';
 import { HttpClientModule } from '@angular/common/http';
+import path from 'path';
 
 @Component({
   selector: 'app-evenement',
@@ -33,37 +34,24 @@ export class EvenementComponent {
     lieu: [this.defaults?.lieu || ''],
     capacite: [this.defaults?.capacite || ''],
     price: [this.defaults?.price || ''],
-    image: [this.defaults?.image || ''],
+    image: this.fb.group({
+      path: [this.defaults?.image?.path || ''],
+    }),
     category: [this.defaults?.category || ''],
     visibility: [this.defaults?.visibility || ''],
   });
 
   mode: 'create' | 'update' = 'create';
-  constructor(private fb: FormBuilder, private serviceHttp: ServiceService) {
-    // this.form = this.fb.group({
-    //   _id: '',
-    //   titre: '',
-    //   description: '',
-    //   date: '',
-    //   lieu: '',
-    //   capacite: '',
-    //   price: '',
-    //   image: '',
-    //   category: '',
-    //   visibility: '',
-    // });
-  }
+  constructor(private fb: FormBuilder, private serviceHttp: ServiceService) {}
 
   ngOnInit() {
     if (!this.defaults) {
       this.defaults = {} as Evenement;
     }
     this.form.patchValue(this.defaults);
-
-    console.log(this.defaults, 'defaultsdefaultsdefaultsdefaults');
   }
+
   save() {
-    console.log(this.form, 'hhhhhhhhhhhhhhhhhhhhhhhhhh');
     if (!this.form.valid) {
       if (this.mode === 'create') {
         this.create();
@@ -71,14 +59,12 @@ export class EvenementComponent {
         this.update();
       }
     }
-    console.log(this.form, 'hhhhhhhhhh-------------------hhhhhhhhhhhhhhhh');
   }
   create() {
-    console.log('this.form.value', this.form.value);
-
     const item = this.form.value as Evenement;
-
-    this.serviceHttp.AddNew(item).subscribe((res) => {});
+    this.serviceHttp.AddNew(item).subscribe((res) => {
+      this.serviceHttp.successCreate(res);
+    });
   }
 
   update() {
@@ -89,7 +75,9 @@ export class EvenementComponent {
         'Item ID does not exist, this customer cannot be updated'
       );
     }
-    this.serviceHttp.update(item).subscribe((res) => {});
+    this.serviceHttp.update(item).subscribe((res) => {
+      this.serviceHttp.successCreate(res);
+    });
   }
 
   isCreateMode() {

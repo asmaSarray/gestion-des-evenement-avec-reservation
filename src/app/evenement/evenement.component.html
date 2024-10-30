@@ -1,5 +1,5 @@
 <div>
-  <div class="flex items-center" mat-dialog-title>
+  <!--  <div class="flex items-center" mat-dialog-title>
     <h2 *ngIf="defaults?.titre" class="headline m-0 flex-auto">
       Modifier événement
     </h2>
@@ -12,11 +12,12 @@
       mat-icon-button
       type="button"
     ></button>
-  </div>
+  </div> -->
 
   <div class="container">
     <!-- Title section -->
-    <div class="title">créer événement</div>
+    <div class="title" *ngIf="!defaults?.titre">créer événement</div>
+    <div class="title" *ngIf="defaults?.titre">Modifier événement</div>
     <div class="content">
       <!-- Registration form -->
       <form action="#" (ngSubmit)="save()" [formGroup]="form">
@@ -83,20 +84,21 @@
           </div>
           <div class="input-box">
             <span class="details">Image de l'événement </span>
-            <input
-              formControlName="image"
-              type="file"
-              id="imageUpload"
-              name="image"
-              accept=" .jpg, .jpeg, .pjpeg, .pjp, .png, "
-            />
-            <!-- <input type="submit" value="Upload" /> -->
-            <!-- <input
+            <div formGroupName="image">
+              <input
                 type="file"
-                accept=".gif, .jpg, .jpeg, .jfif, .pjpeg, .pjp, .png, .svg"
-                placeholder="image"
-                required
-              /> -->
+                formControlName="path"
+                placeholder="Enter image path"
+                accept="image/*"
+              />
+            </div>
+            <!-- <input
+              type="file"
+              formControlName="image"
+              id="imageInput"
+              accept="image/*"
+              required
+            /> -->
           </div>
           <!-- Input for Confirm Password -->
           <div class="input-box">

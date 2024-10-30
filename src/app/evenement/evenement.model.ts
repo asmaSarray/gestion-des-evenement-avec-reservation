@@ -7,16 +7,19 @@ export class Evenement {
   lieu: String;
   capacite: Number;
   price: Number;
-  image: [
-    {
-      public_id: {
-        type: String;
-      };
-      url: {
-        type: String;
-      };
-    }
-  ];
+  // image: [
+  //   {
+  //     // public_id: {
+  //     //   type: String;
+  //     // };
+  //     img: {
+  //       type: String;
+  //     };
+  //   }
+  // ];
+  image: {
+    path: String;
+  };
   category: String;
   visibility: Boolean;
 
@@ -34,8 +37,8 @@ export class Evenement {
   }
 }
 export interface ReponseList {
-    MESSAGE: string;
-    OK: Boolean;
-  
-    RESULTAT: any
-  }
+  MESSAGE: string;
+  OK: Boolean;
+
+  RESULTAT: any;
+}

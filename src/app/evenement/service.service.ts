@@ -18,13 +18,13 @@ export class ServiceService {
   AddNew(data: Evenement): Observable<any> {
     let newdata: any = { ...data };
     newdata._id = undefined;
-    return this.httpClient.post(`${this.REST_API}/`, newdata);
-    // .pipe(catchError(this.tokenService.handleErrorWithParams()));
+    console.log('Événement créé avec succès!', newdata);
+
+    return this.httpClient.post(`${this.REST_API}`, newdata);
   }
 
   // Get all objects
   GetAll(): Observable<any> {
-    // let data = { code_societe: this.tokenService.getCodeSociete() }
     return this.httpClient.get(`${this.REST_API}/events`);
     // .pipe(catchError(this.tokenService.handleErrorWithParams()));
   }
@@ -50,7 +50,6 @@ export class ServiceService {
   delete(id: any): Observable<any> {
     let API_URL = `${this.REST_API}/event`;
     let data: any = {};
-    // data.code_societe = this.tokenService.getCodeSociete()
     data._id = id;
     return this.httpClient.put(API_URL, data);
     // .pipe(catchError(this.tokenService.handleErrorWithParams()));
@@ -63,9 +62,9 @@ export class ServiceService {
     }
     return newItems;
   }
-  successCreate(res: ReponseList, dialogRef: any) {
+  successCreate(res: ReponseList) {
     if (res.OK) {
-      dialogRef.close(res.RESULTAT);
+      (res.RESULTAT);
     } else {
       // showAlertError(globalVariable.msg_erreur_titre, res.RESULTAT);
     }
@@ -79,10 +78,6 @@ export class ServiceService {
     }
   }
 
-  public allTypeDepartementObservable = new Subject<[]>();
-  public allTypeDepartement = [];
-  setAllTypeDepartement(allTypeDepartement: any) {
-    this.allTypeDepartementObservable.next(allTypeDepartement);
-    this.allTypeDepartement = allTypeDepartement;
-  }
+  
+  
 }
