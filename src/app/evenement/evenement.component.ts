@@ -64,6 +64,7 @@ export class EvenementComponent {
     const item = this.form.value as Evenement;
     this.serviceHttp.AddNew(item).subscribe((res) => {
       this.serviceHttp.successCreate(res);
+      this.form.reset(); // Réinitialiser le formulaire après soumission
     });
   }
 
