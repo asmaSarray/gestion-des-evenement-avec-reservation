@@ -1,44 +1,141 @@
-<form class="row g-3">
-  <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">Email</label>
-    <input type="email" class="form-control" id="inputEmail4">
-  </div>
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Password</label>
-    <input type="password" class="form-control" id="inputPassword4">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" id="inputCity">
-  </div>
-  <div class="col-md-4">
-    <label for="inputState" class="form-label">State</label>
-    <select id="inputState" class="form-select">
-      <option selected>Choose...</option>
-      <option>...</option>
-    </select>
-  </div>
-  <div class="col-md-2">
-    <label for="inputZip" class="form-label">Zip</label>
-    <input type="text" class="form-control" id="inputZip">
-  </div>
-  <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
+<div>
+  <!--  <div class="flex items-center" mat-dialog-title>
+    <h2 *ngIf="defaults?.titre" class="headline m-0 flex-auto">
+      Modifier événement
+    </h2>
+    <h2 *ngIf="!defaults?.titre" class="headline m-0 flex-auto">
+      Ajouter événement
+    </h2>
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button"
+    ></button>
+  </div> -->
+
+  <div class="container">
+    <!-- Title section -->
+    <div class="title" *ngIf="!defaults?.titre">créer événement</div>
+    <div class="title" *ngIf="defaults?.titre">Modifier événement</div>
+    <div class="content">
+      <!-- Registration form -->
+      <form action="#" (ngSubmit)="save()" [formGroup]="form">
+        <div class="user-details">
+          <!-- Input for Full Name -->
+          <div class="input-box">
+            <span class="details">Titre de l'événement</span>
+            <input
+              type="text"
+              placeholder=" Le nom de l'événement"
+              formControlName="titre"
+              required
+            />
+          </div>
+          <!-- Input for Username -->
+          <div class="input-box">
+            <span class="details">Description</span>
+            <input
+              formControlName="description"
+              type="text"
+              placeholder=" Une description complète de l'événement"
+              required
+            />
+          </div>
+          <!-- Input for Email -->
+          <div class="input-box">
+            <span class="details">Date et heure</span>
+            <input
+              type="text"
+              formControlName="date"
+              placeholder="Sélection de date et heure"
+              required
+            />
+          </div>
+          <!-- Input for Phone Number -->
+          <div class="input-box">
+            <span class="details">Lieu</span>
+            <input
+              type="text"
+              formControlName="lieu"
+              placeholder="L'endroit où se tiendra l'événement"
+              required
+            />
+          </div>
+          <!-- Input for Password -->
+          <div class="input-box">
+            <span class="details">Capacité maximale</span>
+            <input
+              formControlName="capacite"
+              type="number"
+              placeholder="Nombre total de participants autorisés"
+              required
+            />
+          </div>
+          <!-- Input for Confirm Password -->
+          <div class="input-box">
+            <span class="details">Prix d'entrée</span>
+            <input
+              type="text"
+              formControlName="price"
+              placeholder="le prix du billet"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <span class="details">Image de l'événement </span>
+            <div formGroupName="image">
+              <input
+                type="file"
+                formControlName="path"
+                placeholder="Enter image path"
+                accept="image/*"
+              />
+            </div>
+            <!-- <input
+              type="file"
+              formControlName="image"
+              id="imageInput"
+              accept="image/*"
+              required
+            /> -->
+          </div>
+          <!-- Input for Confirm Password -->
+          <div class="input-box">
+            <span class="details">Catégorie</span>
+            <input
+              formControlName="category"
+              type="text"
+              placeholder="musique, conférence, sport, etc"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="gender-details">
+          <!-- Radio buttons for gender selection -->
+          <input type="radio" formControlName="visibility" id="dot-1" />
+
+          <span class="gender-title">Visibilité publique ou privée</span>
+          <div class="category">
+            <!-- Label for Male -->
+            <label for="dot-1">
+              <span class="dot one"></span>
+              <span class="gender"
+                >Sélection pour indiquer si l'événement est ouvert à tous ou
+                restreint à un certain groupe.</span
+              >
+            </label>
+          </div>
+        </div>
+        <!-- Submit button -->
+        <div class="button">
+          <input type="submit" value="Créer l'événement" />
+          <!-- <div class="button">
+              <input *ngIf="isUpdateMode()" type="submit" value="valider" />
+            </div> -->
+        </div>
+      </form>
     </div>
   </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Sign in</button>
-  </div>
-</form>
+</div>
