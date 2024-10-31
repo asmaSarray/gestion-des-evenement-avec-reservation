@@ -88,19 +88,20 @@
               <input
                 type="file"
                 formControlName="path"
+                (change)="getimg($event)"
                 placeholder="Enter image path"
                 accept="image/*"
+                id="fileInput"
+              />
+              <input
+                formControlName="alt"
+                type="text"
+                (change)="getalt($event)"
               />
             </div>
-            <!-- <input
-              type="file"
-              formControlName="image"
-              id="imageInput"
-              accept="image/*"
-              required
-            /> -->
+            
           </div>
-          <!-- Input for Confirm Password -->
+
           <div class="input-box">
             <span class="details">Catégorie</span>
             <input

@@ -5,6 +5,7 @@ import { PageAccueilComponent } from './page-accueil/page-accueil.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCommonModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     PageAccueilComponent,
     NavbarComponent,
     MatDialogModule,
+    MatCommonModule
   ],
   providers: [HttpClientModule],
   templateUrl: './app.component.html',
