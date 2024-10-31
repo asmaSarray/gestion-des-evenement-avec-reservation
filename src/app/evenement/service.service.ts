@@ -14,6 +14,7 @@ import {
 export class ServiceService {
   REST_API = environment.baseUrl + '/events';
   constructor(private httpClient: HttpClient) {}
+
   // Add
   AddNew(data: Evenement): Observable<any> {
     let newdata: any = { ...data };
@@ -64,7 +65,7 @@ export class ServiceService {
   }
   successCreate(res: ReponseList) {
     if (res.OK) {
-      (res.RESULTAT);
+      res.RESULTAT;
     } else {
       // showAlertError(globalVariable.msg_erreur_titre, res.RESULTAT);
     }
@@ -77,7 +78,4 @@ export class ServiceService {
       // showAlertError(globalVariable.msg_erreur_titre, res.RESULTAT);
     }
   }
-
-  
-  
 }

@@ -10,9 +10,8 @@ import { Evenement } from './evenement.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ServiceService } from './service.service';
 import { NgIf } from '@angular/common';
-import { setObjets1ToObjets2 } from '../global-functions';
 import { HttpClientModule } from '@angular/common/http';
-import path from 'path';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-evenement',
@@ -36,19 +35,25 @@ export class EvenementComponent {
     price: [this.defaults?.price || ''],
     image: this.fb.group({
       path: [this.defaults?.image?.path || ''],
+      alt: [this.defaults?.image?.alt || ''],
     }),
+
     category: [this.defaults?.category || ''],
     visibility: [this.defaults?.visibility || ''],
   });
 
   mode: 'create' | 'update' = 'create';
-  constructor(private fb: FormBuilder, private serviceHttp: ServiceService) {}
+  constructor(
+    private fb: FormBuilder,
+    private serviceHttp: ServiceService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     if (!this.defaults) {
       this.defaults = {} as Evenement;
     }
-    this.form.patchValue(this.defaults);
+    // this.form.patchValue(this.defaults);
   }
 
   save() {
@@ -59,6 +64,19 @@ export class EvenementComponent {
         this.update();
       }
     }
+  }
+  getimg(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.form.get('image.path')?.setValue(file.name); // Met à jour le chemin de l'image dans le formulaire
+      console.log('first', file.name);
+    }
+  }
+
+  // Méthode pour gérer la valeur de "alt"
+  getalt(event: any) {
+    const alt = event.target.value;
+    this.form.get('image.alt')?.setValue(alt); // Met à jour la description de l'image dans le formulaire
   }
   create() {
     const item = this.form.value as Evenement;

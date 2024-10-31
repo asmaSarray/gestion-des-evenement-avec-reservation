@@ -1,35 +1,36 @@
 import { Component } from '@angular/core';
 import { Evenement } from '../evenement/evenement.model';
 import { ServiceService } from '../evenement/service.service';
-import { NgFor } from '@angular/common';
+import { NgFor , NgIf} from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-liste-evenement',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './liste-evenement.component.html',
   styleUrl: './liste-evenement.component.css',
 })
 export class ListeEvenementComponent {
   // public events: Evenement = {} as Evenement;
   events: any[] = [];
+  event: Evenement | null = null;
 
-  constructor(private eventService: ServiceService) {}
+  constructor(private eventService: ServiceService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
+   
     this.eventService.GetAll().subscribe({
       next: (data) => {
-        console.log('Full response:', data); // Logs the entire response
-        console.log('Evenements array:', data.evenements); // Logs the evenements property specifically
-
-        if (Array.isArray(data.evenements)) {
-          this.events = data.evenements; // Set events only if it's an array
-        } else {
-          console.error('Expected an array but received:', data.evenements);
-        }
+        this.events = data.evenements;
+        this.events.forEach(event => {
+          event.image = this.sanitizer.bypassSecurityTrustUrl(event.image.path);
+        });
       },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des événements:', error);
-      },
+  
+       
     });
   }
 }

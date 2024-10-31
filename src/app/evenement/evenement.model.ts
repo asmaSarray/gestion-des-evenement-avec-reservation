@@ -19,6 +19,7 @@ export class Evenement {
   // ];
   image: {
     path: String;
+    alt: String;
   };
   category: String;
   visibility: Boolean;

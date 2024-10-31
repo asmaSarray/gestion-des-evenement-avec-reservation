@@ -1,23 +1,24 @@
 <div class="card-deck">
   <div *ngFor="let event of events" class="card" style="width: 18rem">
     <img [src]="event.image?.path" class="card-img-top" />
+
     <div class="card-body">
-      <h5 class="card-title">{{ event.titre }}</h5>
-      <p class="card-text">{{ event.description }}</p>
+      <h5 class="card-title">Titre : {{ event.titre }}</h5>
+      <p class="card-text">Description : {{ event.description }}</p>
       <p class="card-text">
-        <small class="text-muted">{{ event.date }}</small>
+        <small class="text-muted"> Date : {{ event.date }}</small>
       </p>
       <p class="card-text">
-        <small class="text-muted">{{ event.lieu }}</small>
+        <small class="text-muted">Lieu : {{ event.lieu }}</small>
       </p>
       <p class="card-text">
-        <small class="text-muted">{{ event.capacite }}</small>
+        <small class="text-muted"> Capacite : {{ event.capacite }}</small>
       </p>
       <p class="card-text">
-        <small class="text-muted">{{ event.price }}</small>
+        <small class="text-muted">Price : {{ event.price }}</small>
       </p>
       <p class="card-text">
-        <small class="text-muted">{{ event.category }}</small>
+        <small class="text-muted">Category : {{ event.category }}</small>
       </p>
     </div>
   </div>
