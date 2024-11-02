@@ -13,6 +13,7 @@ import {
 })
 export class ServiceService {
   REST_API = environment.baseUrl + '/events';
+  imgapi = environment.baseUrl + '/uploadImage/';
   constructor(private httpClient: HttpClient) {}
 
   // Add
@@ -21,7 +22,7 @@ export class ServiceService {
     newdata._id = undefined;
     console.log('Événement créé avec succès!', newdata);
 
-    return this.httpClient.post(`${this.REST_API}`, newdata);
+    return this.httpClient.post(`${this.imgapi}`, newdata);
   }
 
   // Get all objects

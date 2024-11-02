@@ -1,6 +1,7 @@
 import { Component, Inject, inject } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -9,7 +10,7 @@ import {
 import { Evenement } from './evenement.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ServiceService } from './service.service';
-import { NgIf } from '@angular/common';
+import { formatDate, NgIf } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -21,8 +22,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrl: './evenement.component.css',
 })
 export class EvenementComponent {
-  // form: FormGroup;
-
   public defaults: Evenement = {} as Evenement;
 
   form = this.fb.group({
@@ -78,8 +77,35 @@ export class EvenementComponent {
     const alt = event.target.value;
     this.form.get('image.alt')?.setValue(alt); // Met à jour la description de l'image dans le formulaire
   }
+
+  // this method is called when a file is selected in the input
+  // onImgSelected(event: any) {
+  //   //get the selected file from the input
+  //   const file: File = event.target.images[0];
+  //   if (file) {
+  //     //handle the selected img here
+  //     this.form.value.image.path = file;
+  //     console.log('selected file', file);
+  //   }
+  // }
+  // uploadImage() {
+  //   if (this.form.value.image) {
+  //     const formData = new FormData();
+  //     formData.append('image', this.form.value.image, this.form.value.image.path)
+      
+  //     this.serviceHttp.AddNew('uploadImage/', formData).subscribe(
+  //       (response: any) => {
+  //         console.log(response);
+  //       },
+  //       (error) => {
+  //         console.error('Erreur lors de l\'upload de l\'image:', error);
+  //       }
+  //     );
+  //   }
+  // }
   create() {
     const item = this.form.value as Evenement;
+    
     this.serviceHttp.AddNew(item).subscribe((res) => {
       this.serviceHttp.successCreate(res);
       this.form.reset(); // Réinitialiser le formulaire après soumission
