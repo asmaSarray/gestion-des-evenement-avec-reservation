@@ -17,10 +17,7 @@ export class Evenement {
   //     };
   //   }
   // ];
-  image: {
-    path: String;
-    alt: String;
-  };
+  image: {};
   category: String;
   visibility: Boolean;
 
@@ -32,7 +29,7 @@ export class Evenement {
     this.lieu = evenement?.lieu || 0;
     this.capacite = evenement?.capacite || '';
     this.price = evenement?.price || '';
-    this.image = evenement?.image || { public_id: '', url: '' };
+    this.image = evenement?.image || { };
     this.category = evenement?.category || '';
     this.visibility = evenement?.visibility || false;
   }

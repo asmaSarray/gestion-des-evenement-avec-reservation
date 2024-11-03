@@ -13,7 +13,6 @@ import {
 })
 export class ServiceService {
   REST_API = environment.baseUrl + '/events';
-  imgapi = environment.baseUrl + '/uploadImage/';
   constructor(private httpClient: HttpClient) {}
 
   // Add
@@ -22,18 +21,17 @@ export class ServiceService {
     newdata._id = undefined;
     console.log('Événement créé avec succès!', newdata);
 
-    return this.httpClient.post(`${this.imgapi}`, newdata);
+    return this.httpClient.post(`${this.REST_API}`, newdata);
   }
 
   // Get all objects
   GetAll(): Observable<any> {
-    return this.httpClient.get(`${this.REST_API}/events`);
-    // .pipe(catchError(this.tokenService.handleErrorWithParams()));
+    return this.httpClient.get(`${this.REST_API}/`);
   }
 
   // Get single object
   GetOne(id: any): Observable<any> {
-    let API_URL = `${this.REST_API}/'event'${id}`;
+    let API_URL = `${this.REST_API}/${id}`;
     return this.httpClient.get(API_URL).pipe(
       map((res: any) => {
         return res || {};
@@ -44,13 +42,13 @@ export class ServiceService {
 
   // Update
   update(data: ServiceService): Observable<any> {
-    let API_URL = `${this.REST_API}/'event'`;
+    let API_URL = `${this.REST_API}/`;
     return this.httpClient.put(API_URL, data);
   }
 
   // Delete
   delete(id: any): Observable<any> {
-    let API_URL = `${this.REST_API}/event`;
+    let API_URL = `${this.REST_API}/`;
     let data: any = {};
     data._id = id;
     return this.httpClient.put(API_URL, data);
