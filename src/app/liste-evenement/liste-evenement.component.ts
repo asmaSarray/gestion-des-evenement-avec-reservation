@@ -12,36 +12,41 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrl: './liste-evenement.component.css',
 })
 export class ListeEvenementComponent {
-  // public events: Evenement = {} as Evenement;
   events: any[] = [];
-  event: Evenement | null = null;
+  event: any | null = null;
 
   constructor(
     private eventService: ServiceService,
     private sanitizer: DomSanitizer
   ) {}
-
   ngOnInit(): void {
     this.eventService.GetAll().subscribe({
       next: (data) => {
         console.log('Reçu des données:', data);
-        if (Array.isArray(data.evenements)) {
-          this.events = data.evenements;
-          this.events.forEach((event) => {
-            console.log("Vérification de l'image:", event.image);
-            if (event.image && event.image.path) {
-              console.log("Chemin de l'image:", event.image.path);
-            } else {
-              console.error("Aucun chemin d'image trouvé pour cet événement.");
-            }
-          });
-        } else {
-          console.error('Expected an array but received:', data.evenements);
-        }
+        this.events = data.evenements;
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des événements:', error);
       },
     });
   }
+  // ngOnInit(): void {
+  //   this.eventService.GetAll().subscribe({
+  //     next: (data) => {
+  //       console.log('Reçu des données:', data);
+  //       if (Array.isArray(data.evenements)) {
+  //         this.events = data.evenements;
+  //         console.log(data.evenements, 'data.evenements');
+  //         this.events.forEach((event) => {
+  //           console.log("Vérification de l'image:", event.image);
+  //         });
+  //       } else {
+  //         console.error('Expected an array but received:', data.evenements);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Erreur lors de la récupération des événements:', error);
+  //     },
+  //   });
+  // }
 }

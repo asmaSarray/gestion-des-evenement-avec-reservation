@@ -32,11 +32,7 @@ export class EvenementComponent {
     lieu: [this.defaults?.lieu || ''],
     capacite: [this.defaults?.capacite || ''],
     price: [this.defaults?.price || ''],
-    image: this.fb.group({
-      path: [this.defaults?.image?.path || ''],
-      alt: [this.defaults?.image?.alt || ''],
-    }),
-
+    image: this.defaults?.image || {},
     category: [this.defaults?.category || ''],
     visibility: [this.defaults?.visibility || ''],
   });
@@ -92,7 +88,7 @@ export class EvenementComponent {
   //   if (this.form.value.image) {
   //     const formData = new FormData();
   //     formData.append('image', this.form.value.image, this.form.value.image.path)
-      
+
   //     this.serviceHttp.AddNew('uploadImage/', formData).subscribe(
   //       (response: any) => {
   //         console.log(response);
@@ -105,7 +101,7 @@ export class EvenementComponent {
   // }
   create() {
     const item = this.form.value as Evenement;
-    
+
     this.serviceHttp.AddNew(item).subscribe((res) => {
       this.serviceHttp.successCreate(res);
       this.form.reset(); // Réinitialiser le formulaire après soumission
