@@ -32,7 +32,7 @@ export class EvenementComponent {
     lieu: [this.defaults?.lieu || ''],
     capacite: [this.defaults?.capacite || ''],
     price: [this.defaults?.price || ''],
-    image: this.defaults?.image || {},
+    image: this.defaults?.image || '',
     category: [this.defaults?.category || ''],
     visibility: [this.defaults?.visibility || ''],
   });
@@ -60,50 +60,18 @@ export class EvenementComponent {
       }
     }
   }
-  getimg(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.form.get('image.path')?.setValue(file.name); // Met à jour le chemin de l'image dans le formulaire
-      console.log('first', file.name);
-    }
-  }
 
-  // Méthode pour gérer la valeur de "alt"
-  getalt(event: any) {
-    const alt = event.target.value;
-    this.form.get('image.alt')?.setValue(alt); // Met à jour la description de l'image dans le formulaire
-  }
-
-  // this method is called when a file is selected in the input
-  // onImgSelected(event: any) {
-  //   //get the selected file from the input
-  //   const file: File = event.target.images[0];
-  //   if (file) {
-  //     //handle the selected img here
-  //     this.form.value.image.path = file;
-  //     console.log('selected file', file);
-  //   }
-  // }
-  // uploadImage() {
-  //   if (this.form.value.image) {
-  //     const formData = new FormData();
-  //     formData.append('image', this.form.value.image, this.form.value.image.path)
-
-  //     this.serviceHttp.AddNew('uploadImage/', formData).subscribe(
-  //       (response: any) => {
-  //         console.log(response);
-  //       },
-  //       (error) => {
-  //         console.error('Erreur lors de l\'upload de l\'image:', error);
-  //       }
-  //     );
-  //   }
-  // }
   create() {
     const item = this.form.value as Evenement;
+    console.log(this.form.value.image, '%%%%%%%%%%%%%%%%%%%%%%%%');
 
     this.serviceHttp.AddNew(item).subscribe((res) => {
       this.serviceHttp.successCreate(res);
+      console.log(
+        this.form.value.image,
+        '%%%%%%%%%%1111111111111%%%%%%%%%%%%%%'
+      );
+      console.log(item.image, '£££££££££££££££');
       this.form.reset(); // Réinitialiser le formulaire après soumission
     });
   }
