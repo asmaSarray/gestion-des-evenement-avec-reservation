@@ -84,13 +84,10 @@
           </div>
           <div class="input-box">
             <span class="details">Image de l'événement </span>
-            <input
-              type="file"
-              formControlName="image"
-              accept="image/*"
-              id="fileInput"
-            />
+            <input type="file" accept="image/*" (change)="onFileChange($event)" />
+
           </div>
+          <!-- (change)="onFileChange($event)" -->
 
           <div class="input-box">
             <span class="details">Catégorie</span>

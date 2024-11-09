@@ -8,11 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Evenement } from './evenement.model';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ServiceService } from './service.service';
 import { formatDate, NgIf } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-evenement',
@@ -23,6 +21,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class EvenementComponent {
   public defaults: Evenement = {} as Evenement;
+  selectedFile: File | null = null;
 
   form = this.fb.group({
     _id: [this.defaults?._id || '', Validators.required],
@@ -32,23 +31,39 @@ export class EvenementComponent {
     lieu: [this.defaults?.lieu || ''],
     capacite: [this.defaults?.capacite || ''],
     price: [this.defaults?.price || ''],
-    image: this.defaults?.image || '',
+    image: this.defaults?.image || { path: '' },
     category: [this.defaults?.category || ''],
     visibility: [this.defaults?.visibility || ''],
   });
 
   mode: 'create' | 'update' = 'create';
-  constructor(
-    private fb: FormBuilder,
-    private serviceHttp: ServiceService,
-    private sanitizer: DomSanitizer
-  ) {}
+  constructor(private fb: FormBuilder, private serviceHttp: ServiceService) {}
 
   ngOnInit() {
     if (!this.defaults) {
       this.defaults = {} as Evenement;
     }
-    // this.form.patchValue(this.defaults);
+  }
+
+ 
+  onFileChange(event: any): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const timestamp = new Date().getTime(); // Ajouter un timestamp
+      const fileExtension = file.name.split('.').pop(); // Extraire l'extension du fichier
+      const uniqueFileName = `image-${timestamp}.${fileExtension}`;
+
+      this.form.patchValue({
+        image: {
+          path: `uploads/${uniqueFileName}`,
+        },
+      });
+      console.log(
+        'Fichier sélectionné avec nouveau nom unique:',
+        uniqueFileName
+      );
+    }
   }
 
   save() {
@@ -60,22 +75,12 @@ export class EvenementComponent {
       }
     }
   }
-
   create() {
     const item = this.form.value as Evenement;
-    console.log(this.form.value.image, '%%%%%%%%%%%%%%%%%%%%%%%%');
-
     this.serviceHttp.AddNew(item).subscribe((res) => {
-      this.serviceHttp.successCreate(res);
-      console.log(
-        this.form.value.image,
-        '%%%%%%%%%%1111111111111%%%%%%%%%%%%%%'
-      );
-      console.log(item.image, '£££££££££££££££');
       this.form.reset(); // Réinitialiser le formulaire après soumission
     });
   }
-
   update() {
     const item: any = this.form.value;
 

@@ -20,7 +20,6 @@ export class ServiceService {
     let newdata: any = { ...data };
     newdata._id = undefined;
     console.log('Événement créé avec succès!', newdata);
-    console.log(newdata.image, 'nnnnnnnnnnnnnnnnnn');
 
     return this.httpClient.post(`${this.REST_API}`, newdata);
   }

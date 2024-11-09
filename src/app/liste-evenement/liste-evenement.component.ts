@@ -30,23 +30,4 @@ export class ListeEvenementComponent {
       },
     });
   }
-  // ngOnInit(): void {
-  //   this.eventService.GetAll().subscribe({
-  //     next: (data) => {
-  //       console.log('Reçu des données:', data);
-  //       if (Array.isArray(data.evenements)) {
-  //         this.events = data.evenements;
-  //         console.log(data.evenements, 'data.evenements');
-  //         this.events.forEach((event) => {
-  //           console.log("Vérification de l'image:", event.image);
-  //         });
-  //       } else {
-  //         console.error('Expected an array but received:', data.evenements);
-  //       }
-  //     },
-  //     error: (error) => {
-  //       console.error('Erreur lors de la récupération des événements:', error);
-  //     },
-  //   });
-  // }
 }
