@@ -7,17 +7,9 @@ export class Evenement {
   lieu: String;
   capacite: Number;
   price: Number;
-  // image: [
-  //   {
-  //     // public_id: {
-  //     //   type: String;
-  //     // };
-  //     img: {
-  //       type: String;
-  //     };
-  //   }
-  // ];
-  image: {};
+  image: {
+    path: String;
+  };
   category: String;
   visibility: Boolean;
 
@@ -29,7 +21,7 @@ export class Evenement {
     this.lieu = evenement?.lieu || 0;
     this.capacite = evenement?.capacite || '';
     this.price = evenement?.price || '';
-    this.image = evenement?.image || { };
+    this.image = evenement?.image || { path: '' };
     this.category = evenement?.category || '';
     this.visibility = evenement?.visibility || false;
   }

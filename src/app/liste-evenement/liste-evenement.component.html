@@ -1,11 +1,8 @@
 <div class="card-deck">
   <div *ngFor="let event of events" class="card" style="width: 18rem">
     <div class="card-body">
-      <!-- <img
-        [src]="'C:\Users\pc\crud11backend\uploads' + event.image"
-        alt="Image de l'événement"
-      /> -->
-      <img [src]="'' + event.image" alt="Image de l'événement" />
+      <img [src]="'http://localhost:8080/' + event.image.path" alt="Image de l'événement" />
+
       <h5 class="card-title">Titre : {{ event.titre }}</h5>
       <p class="card-text">Description : {{ event.description }}</p>
       <p class="card-text">

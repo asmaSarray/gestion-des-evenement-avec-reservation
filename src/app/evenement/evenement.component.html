@@ -84,21 +84,10 @@
           </div>
           <div class="input-box">
             <span class="details">Image de l'événement </span>
-            <div formGroupName="image">
-              <input
-                type="file"
-                formControlName="path"
-                placeholder="Enter image path"
-                accept="image/*"
-                id="fileInput"
-              />
-              <input
-                formControlName="alt"
-                type="text"
-                (change)="getalt($event)"
-              />
-            </div>
+            <input type="file" accept="image/*" (change)="onFileChange($event)" />
+
           </div>
+          <!-- (change)="onFileChange($event)" -->
 
           <div class="input-box">
             <span class="details">Catégorie</span>
@@ -113,19 +102,18 @@
 
         <div class="gender-details">
           <!-- Radio buttons for gender selection -->
-          <input type="radio" formControlName="visibility" id="dot-1" />
+          <input type="text" formControlName="visibility" id="dot-1" />
 
-          <span class="gender-title">Visibilité publique ou privée</span>
+          <!-- <span class="gender-title">Visibilité publique ou privée</span>
           <div class="category">
-            <!-- Label for Male -->
             <label for="dot-1">
               <span class="dot one"></span>
-              <span class="gender"
+              <span class="gender" 
                 >Sélection pour indiquer si l'événement est ouvert à tous ou
                 restreint à un certain groupe.</span
               >
             </label>
-          </div>
+          </div> -->
         </div>
         <!-- Submit button -->
         <div class="button">
