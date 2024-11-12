@@ -45,24 +45,17 @@ export class EvenementComponent {
     }
   }
 
- 
   onFileChange(event: any): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput && fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      const timestamp = new Date().getTime(); // Ajouter un timestamp
-      const fileExtension = file.name.split('.').pop(); // Extraire l'extension du fichier
-      const uniqueFileName = `image-${timestamp}.${fileExtension}`;
 
       this.form.patchValue({
         image: {
-          path: `uploads/${uniqueFileName}`,
+          path: `uploads/${file.name}`,
         },
       });
-      console.log(
-        'Fichier sélectionné avec nouveau nom unique:',
-        uniqueFileName
-      );
+      console.log('Fichier sélectionné avec nouveau nom unique:', file.name);
     }
   }
 
