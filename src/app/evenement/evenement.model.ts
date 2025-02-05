@@ -7,9 +7,10 @@ export class Evenement {
   lieu: String;
   capacite: Number;
   price: Number;
-  image: {
-    path: String;
-  };
+  image : String;
+  // image: {
+  //   path: String;
+  // };
   category: String;
   visibility: Boolean;
 

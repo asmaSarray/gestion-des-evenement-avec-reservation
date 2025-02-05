@@ -1,7 +1,7 @@
-<div class="card-deck">
+<!-- <div class="container">
   <div *ngFor="let event of events" class="card" style="width: 18rem">
     <div class="card-body">
-      <img [src]="'http://localhost:8080/' + event.image.path" alt="Image de l'événement" />
+      <img *ngIf="event.image" [src]="event.image" alt="Image de l'événement" />
 
       <h5 class="card-title">Titre : {{ event.titre }}</h5>
       <p class="card-text">Description : {{ event.description }}</p>
@@ -22,38 +22,32 @@
       </p>
     </div>
   </div>
+</div> -->
+<!-- Partie Filtres -->
+<div class="filter-container">
+  <form [formGroup]="filterForm">
+    <input type="text" formControlName="search" placeholder="Rechercher...">
+    <select formControlName="category">
+      <option value="">Toutes les catégories</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+  </form>
 </div>
 
-<!-- 
-<div class="container">
-  <table class="table">
-    <thead>
-      <h3>liste evenement</h3>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>twitter</td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
+<!-- Partie Contrôle d'affichage -->
+<div class="view-controls">
+  <button (click)="setViewMode('grid')" [class.active]="viewMode === 'grid'">Grille</button>
+  <button (click)="setViewMode('list')" [class.active]="viewMode === 'list'">Liste</button>
+</div>
+
+<!-- Partie Liste des événements -->
+<div class="container" [class.list-view]="viewMode === 'list'">
+  <div *ngFor="let event of filteredEvents" class="card">
+    <img *ngIf="event.image" [src]="event.image" alt="Image de l'événement">
+    <div class="card-body">
+      <h5 class="card-title">{{ event.titre }}</h5>
+      <p class="card-text">{{ event.description }}</p>
+      <!-- Reste du contenu -->
+    </div>
+  </div>
+</div>

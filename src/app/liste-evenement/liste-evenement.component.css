@@ -1,15 +1,294 @@
-.container {
-  max-width: 980px;
-  width: 100%;
-  background-color: #fff;
-  padding: 25px 30px;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  /* padding-top: 60px; */
-  /* Ajoutez ces lignes pour centrer le conteneur */
-  margin: 0 auto; /* Centre horizontalement */
+/* :root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --background-color: #f8f9fa;
+  --text-color: #2c3e50;
+  --muted-text: #7f8c8d;
+  --transition-timing: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+} */
+
+:root {
+  --primary-color: #2d3436;
+  --accent-color: #6c5ce7;
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --glass-effect: blur(10px) saturate(180%);
+}
+
+/* Conteneur principal des filtres */
+.filter-container {
+  width: 280px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: var(--glass-effect);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0 2rem 2rem;
+  position: sticky;
+  top: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Champs de formulaire */
+.filter-input-group {
+  position: relative;
+}
+
+.filter-container input,
+.filter-container select {
+  width: 100%;
+  padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--input-bg);
+  font-size: 0.95rem;
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.filter-container input::placeholder {
+  color: #a5a5a5;
+}
+
+/* Icônes intégrées */
+.filter-input-group::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  opacity: 0.4;
+}
+
+.filter-input-group[data-type="search"]::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>');
+}
+
+.filter-input-group[data-type="select"]::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707-1.414-1.414z"/></svg>');
+}
+
+/* États interactifs */
+.filter-container input:focus,
+.filter-container select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-color), 0 4px 12px rgba(108, 92, 231, 0.2);
+  transform: scale(1.02);
+}
+
+.filter-container select {
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Animation au focus */
+@keyframes input-focus {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.filter-container input:focus,
+.filter-container select:focus {
+  animation: input-focus 0.4s ease-out;
+}
+
+/* Contrôles d'affichage */
+.view-controls {
+  display: flex;
+  gap: 0.5rem;
   justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.view-controls button {
+  padding: 0.6rem 1.5rem;
+  background: #ffffff;
+  border: 2px solid var(--secondary-color);
+  border-radius: 6px;
+  color: var(--secondary-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-timing);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view-controls button:hover {
+  background: var(--secondary-color);
+  /* color: white; */
+  transform: translateY(-1px);
+}
+
+.view-controls button.active {
+  background: var(--secondary-color);
+  /* color: white; */
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Cartes améliorées */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: transform var(--transition-timing),
+    box-shadow var(--transition-timing);
+  transform-style: preserve-3d;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: opacity var(--transition-timing);
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 3px solid #f0f0f0;
+  transition: transform var(--transition-timing);
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.text-muted {
+  color: var(--muted-text) !important;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Mode liste */
+.container.list-view {
+  grid-template-columns: 1fr;
+}
+
+.container.list-view .card {
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+}
+
+.container.list-view .card img {
+  width: 250px;
+  height: 100%;
+  border-right: 3px solid #f0f0f0;
+  border-bottom: none;
+}
+
+.container.list-view .card-body {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .filter-container {
+    width: auto;
+    margin: 1rem;
+    position: static;
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.95);
+  }
+  .container.list-view .card {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .container.list-view .card img {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+/* Effets de chargement sophistiqués */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.card:nth-child(4) {
+  animation-delay: 0.3s;
 }
