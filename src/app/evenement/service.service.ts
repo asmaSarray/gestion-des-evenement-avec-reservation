@@ -12,18 +12,22 @@ import {
   providedIn: 'root',
 })
 export class ServiceService {
-  REST_API = environment.baseUrl + '/events';
+  REST_API = environment.baseUrl + '/events'; //uploads
+  // REST = environment.baseUrl + '/events/uploads';
   constructor(private httpClient: HttpClient) {}
 
   // Add
-  AddNew(data: Evenement): Observable<any> {
-    let newdata: any = { ...data };
-    newdata._id = undefined;
-    console.log('Événement créé avec succès!', newdata);
+  // AddNew(data: Evenement): Observable<any> {
+  //   let newdata: any = { ...data };
+  //   newdata._id = undefined;
+  //   console.log('newdata', newdata);
 
-    return this.httpClient.post(`${this.REST_API}`, newdata);
+  //   return this.httpClient.post(`${this.REST_API}`, newdata);
+  // }
+  // service.service.ts
+  AddNew(formData: FormData): Observable<any> {
+    return this.httpClient.post(this.REST_API, formData);
   }
-
   // Get all objects
   GetAll(): Observable<any> {
     return this.httpClient.get(`${this.REST_API}/`);

@@ -20,7 +20,9 @@
     <div class="title" *ngIf="defaults?.titre">Modifier événement</div>
     <div class="content">
       <!-- Registration form -->
-      <form action="#" (ngSubmit)="save()" [formGroup]="form">
+      <!-- <form action="#" (ngSubmit)="save()" [formGroup]="form"> -->
+        <form action="#" (ngSubmit)="save()" [formGroup]="form" enctype="multipart/form-data">
+
         <div class="user-details">
           <!-- Input for Full Name -->
           <div class="input-box">
@@ -49,6 +51,7 @@
               type="text"
               formControlName="date"
               placeholder="Sélection de date et heure"
+
               required
             />
           </div>
@@ -84,10 +87,9 @@
           </div>
           <div class="input-box">
             <span class="details">Image de l'événement </span>
-            <input type="file" accept="image/*" (change)="onFileChange($event)" />
-
+            <!-- <input type="file" accept="image/*" formControlName="image" /> -->
+            <input type="file" (change)="onFileSelected($event)" />
           </div>
-          <!-- (change)="onFileChange($event)" -->
 
           <div class="input-box">
             <span class="details">Catégorie</span>

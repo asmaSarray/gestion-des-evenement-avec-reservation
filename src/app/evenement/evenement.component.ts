@@ -10,7 +10,7 @@ import {
 import { Evenement } from './evenement.model';
 import { ServiceService } from './service.service';
 import { formatDate, NgIf } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-evenement',
@@ -21,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class EvenementComponent {
   public defaults: Evenement = {} as Evenement;
-  selectedFile: File | null = null;
 
   form = this.fb.group({
     _id: [this.defaults?._id || '', Validators.required],
@@ -31,49 +30,77 @@ export class EvenementComponent {
     lieu: [this.defaults?.lieu || ''],
     capacite: [this.defaults?.capacite || ''],
     price: [this.defaults?.price || ''],
-    image: this.defaults?.image || { path: '' },
+    image: [this.defaults?.image || ''],
     category: [this.defaults?.category || ''],
     visibility: [this.defaults?.visibility || ''],
   });
 
   mode: 'create' | 'update' = 'create';
-  constructor(private fb: FormBuilder, private serviceHttp: ServiceService) {}
+  selectedFile: File | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private serviceHttp: ServiceService,
+    private http: HttpClient
+  ) {}
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.selectedFile = input.files[0]; // Stockez le fichier sélectionné
+      console.log(this.selectedFile); // Vérifiez que le fichier est capturé
+    }
+  }
 
   ngOnInit() {
     if (!this.defaults) {
       this.defaults = {} as Evenement;
     }
   }
+  save() {
+    // if (!this.form.valid) {
+    //   console.error('Formulaire invalide');
+    //   return;
+    // }
 
-  onFileChange(event: any): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput && fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
+    const evenement = this.form.value; // Récupérer les valeurs du formulaire
 
-      this.form.patchValue({
-        image: {
-          path: `uploads/${file.name}`,
+    if (!this.selectedFile) {
+      console.error('Aucune image sélectionnée');
+      return;
+    }
+
+    if (this.mode === 'create') {
+      this.create(evenement, this.selectedFile).subscribe({
+        next: (response) => {
+          console.log('Événement créé avec succès', response);
+        },
+        error: (error) => {
+          console.error("Erreur lors de la création de l'événement", error);
         },
       });
-      console.log('Fichier sélectionné avec nouveau nom unique:', file.name);
+    } else if (this.mode === 'update') {
+      this.update();
     }
+  }
+//   FormData permet d’envoyer des fichiers et des champs texte dans une seule requête HTTP.
+// Contrairement au JSON, FormData est conçu pour gérer les fichiers, ce qui permet une bonne compatibilité avec multer (côté backend).
+  create(evenement: any, image: File) {
+    const formData = new FormData();
+    formData.append('titre', evenement.titre);
+    formData.append('description', evenement.description);
+    formData.append('date', evenement.date);
+    formData.append('lieu', evenement.lieu);
+    formData.append('capacite', evenement.capacite.toString());
+    formData.append('price', evenement.price);
+    formData.append('category', evenement.category);
+    formData.append('visibility', evenement.visibility);
+    formData.append('image', image); // Ajoutez le fichier ici
+    this.form.reset(); // Réinitialiser le formulaire après soumission
+
+    return this.serviceHttp.AddNew(formData);
+
   }
 
-  save() {
-    if (!this.form.valid) {
-      if (this.mode === 'create') {
-        this.create();
-      } else if (this.mode === 'update') {
-        this.update();
-      }
-    }
-  }
-  create() {
-    const item = this.form.value as Evenement;
-    this.serviceHttp.AddNew(item).subscribe((res) => {
-      this.form.reset(); // Réinitialiser le formulaire après soumission
-    });
-  }
   update() {
     const item: any = this.form.value;
 
@@ -95,3 +122,4 @@ export class EvenementComponent {
     return this.mode === 'update';
   }
 }
+
