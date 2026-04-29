@@ -241,7 +241,24 @@
   padding: 1.5rem;
   flex: 1;
 }
+.details-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #6c5ce7;
+  color: white !important;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  margin-top: 1rem;
+  cursor: pointer;
+  position: relative; /* Garantit la visibilité */
+  z-index: 1; /* Met au premier plan */
+}
 
+.details-btn:hover {
+  transform: translateY(-2px);
+  background: #5b4bc4;
+}
 @media (max-width: 768px) {
   .container {
     grid-template-columns: 1fr;

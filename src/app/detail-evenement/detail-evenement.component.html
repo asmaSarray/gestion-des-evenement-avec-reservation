@@ -1,1 +1,63 @@
-<p>detail-evenement works!</p>
+<div class="container">
+  <div class="card detail-card">
+    <div *ngIf="event">
+      <button class="back-btn" (click)="goBack()" type="button">
+        &larr; Retour
+      </button>
+
+      <img
+        *ngIf="event?.image"
+        [src]="event.image"
+        alt="Image de l'événement"
+        class="detail-image"
+      />
+
+      <div class="card-body">
+        <h1 class="detail-title">{{ event?.titre }}</h1>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Description</span>
+            <p class="detail-text">{{ event?.description }}</p>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Date</span>
+            <p class="detail-text">{{ event?.date }}</p>
+            <!-- | date: 'dd/MM/yyyy HH:mm' -->
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Lieu</span>
+            <p class="detail-text">{{ event?.lieu }}</p>
+          </div>
+
+          <div class="detail-meta">
+            <div class="meta-item">
+              <span class="meta-label">Capacité</span>
+              <span class="meta-value">{{ event?.capacite }}</span>
+            </div>
+
+            <div class="meta-item">
+              <span class="meta-label">Prix</span>
+              <span class="meta-value">{{ event?.price }}</span>
+              <!-- | currency:'EUR'  -->
+            </div>
+
+            <div class="meta-item">
+              <span class="meta-label">Catégorie</span>
+              <span class="meta-value">{{ event?.category }}</span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="reservation-btn"
+          (click)="showReservation(event._id || event.id)"
+        >
+          Réserver maintenant
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

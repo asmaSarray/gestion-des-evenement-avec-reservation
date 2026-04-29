@@ -5,6 +5,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-liste-evenement',
@@ -16,60 +17,61 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 export class ListeEvenementComponent {
   filterForm = new FormGroup({
     search: new FormControl(''),
-    category: new FormControl('')
+    category: new FormControl(''),
   });
 
   viewMode = 'grid';
-    
-    categories: string[] = []; // Need to populate this based on events
 
+  categories: string[] = []; // Need to populate this based on events
 
   events: any[] = [];
   event: any | null = null;
- 
 
-  constructor(private eventService: ServiceService) {}
+  constructor(private eventService: ServiceService, private router: Router) {}
   ngOnInit(): void {
     this.initForm();
 
     this.eventService.GetAll().subscribe({
       next: (data) => {
-        console.log('Reçu des données:', data);
-        this.events = data.evenements;
-        this.events = this.events.map((event) => {
-          return {
-            ...event, // Spread the existing event properties
-            image: event.imageUrl, // Add the image property with the value of imageUrl
-          };
-        });
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des événements:', error);
+        this.events = data.evenements.map(
+          (event: { _id: any; imageUrl: any }) => ({
+            ...event,
+            id: event._id, // Map _id vers id
+            image: event.imageUrl,
+          })
+        );
       },
     });
-    this.events.forEach((event) =>
-      console.log(event.imageUrl, '*********************')
-    );
+
+    // this.events.forEach((event) =>
+    //   console.log(event.imageUrl, '*********************')
+    // );
+    // console.log('Événements transformés:', this.events);
   }
- 
+  showDetails(id: string | undefined) {
+    if (!id) {
+      console.error('ID non défini');
+      return;
+    }
+    this.router.navigate(['/detailevenement', id]);
+  }
 
   private initForm() {
-    this.filterForm.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      // .subscribe(() => this.updateFilter());
+    this.filterForm.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    );
+    // .subscribe(() => this.updateFilter());
 
     // Récupération des catégories uniques
-    this.categories = [...new Set(this.events.map(e => e.category))];
+    this.categories = [...new Set(this.events.map((e) => e.category))];
   }
 
   get filteredEvents() {
     const { search, category } = this.filterForm.value;
-    return this.events.filter(event => {
-      const matchSearch = !search || 
-        event.titre.toLowerCase().includes(search.toLowerCase());
+    return this.events.filter((event) => {
+      const matchSearch =
+        !search || event.category.toLowerCase().includes(search.toLowerCase());
       const matchCategory = !category || event.category === category;
       return matchSearch && matchCategory;
     });

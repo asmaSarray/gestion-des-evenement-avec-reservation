@@ -6,6 +6,7 @@ import { EvenementComponent } from './evenement/evenement.component';
 import { PageAccueilComponent } from './page-accueil/page-accueil.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CartComponent } from './cart/cart.component';
 
 export const routes: Routes = [
   { path: '', component: PageAccueilComponent },
@@ -20,7 +21,12 @@ export const routes: Routes = [
     }
   },
   { path: 'listeevenement', component: ListeEvenementComponent },
-  { path: 'detailevenement', component: DetailEvenementComponent },
+  { 
+    path: 'detailevenement/:id', 
+    component: DetailEvenementComponent 
+  },
   { path: 'fichereservation', component: FicheReservationComponent },
+  { path: 'cart', component: CartComponent },
+
 ];
 

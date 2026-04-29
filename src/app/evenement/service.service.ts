@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environment';
-import { map, Observable, Subject } from 'rxjs';
+import { catchError, map, Observable, Subject, throwError } from 'rxjs';
 import { Evenement, ReponseList } from './evenement.model';
 import {
   HttpClient,
@@ -13,7 +13,6 @@ import {
 })
 export class ServiceService {
   REST_API = environment.baseUrl + '/events'; //uploads
-  // REST = environment.baseUrl + '/events/uploads';
   constructor(private httpClient: HttpClient) {}
 
   // Add
@@ -32,17 +31,34 @@ export class ServiceService {
   GetAll(): Observable<any> {
     return this.httpClient.get(`${this.REST_API}/`);
   }
-
-  // Get single object
-  GetOne(id: any): Observable<any> {
-    let API_URL = `${this.REST_API}/${id}`;
-    return this.httpClient.get(API_URL).pipe(
-      map((res: any) => {
-        return res || {};
+  GetOne(id: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.REST_API}/${id}`).pipe(
+      map((response) => {
+        // Vérification approfondie
+        if (response?.evenement?._id === id) {
+          return {
+            ...response.evenement,
+            image: response.evenement.image, // Utilisez le bon champ
+          };
+        }
+        throw new Error('Événement non trouvé');
+      }),
+      catchError((error) => {
+        console.error('Erreur:', error);
+        return throwError(() => error);
       })
-      // catchError(this.tokenService.handleErrorWithParams())
     );
   }
+  // // Get single object
+  // GetOne(id: any): Observable<any> {
+  //   let API_URL = `${this.REST_API}/${id}`;
+  //   return this.httpClient.get(API_URL).pipe(
+  //     map((res: any) => {
+  //       return res || {};
+  //     })
+  //     // catchError(this.tokenService.handleErrorWithParams())
+  //   );
+  // }
 
   // Update
   update(data: ServiceService): Observable<any> {

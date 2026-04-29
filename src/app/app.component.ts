@@ -13,11 +13,10 @@ import { MatCommonModule } from '@angular/material/core';
   imports: [
     RouterOutlet,
     RouterModule,
-    PageAccueilComponent,
     NavbarComponent,
     MatDialogModule,
     MatCommonModule
-  ],
+],
   providers: [HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
